@@ -112,12 +112,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     def script_reproduzVideo(self, gesture):
         global _handle
         info = pybass.BASS_ChannelIsActive(_handle)
-        if info >0:
+        if info == pybass.BASS_ACTIVE_PLAYING:
             pybass.BASS_ChannelStop(_handle)
             _handle = 0
-        else:
-            th = threading.Thread(target=buscaLink, daemon=True)
-            th.start()
+        th = threading.Thread(target=buscaLink, daemon=True)
+        th.start()
 
     script_reproduzVideo.__doc__ = _('Reproduz e pausa o vídeo')
     script_reproduzVideo.category = SCRCAT_SPEECH
