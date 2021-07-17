@@ -1,0 +1,49 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the YoutubePlay package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: YoutubePlay 1.0\n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2021-07-17 15:38-0300\n"
+"PO-Revision-Date: 2021-07-17 15:57-0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0\n"
+"Last-Translator: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: en_US\n"
+
+#, fuzzy
+msgid "Link não encontrado."
+msgstr "Link not found."
+
+msgid "Nenhum link retornado do Youtube-dl"
+msgstr "No links returned from Youtube-dl"
+
+msgid "Reproduz e pausa o vídeo"
+msgstr "Play and pause the video"
+
+msgid "Pausa ou reproduz o vídeo atual"
+msgstr "Pause or play current video"
+
+msgid "Abaixa o volume da música em reprodução"
+msgstr "Turns down the volume of the music being played"
+
+msgid "Aumenta o volume do vídeo em reprodução"
+msgstr "Increases the volume of the video playing"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+msgid "YoutubePlay"
+msgstr "YoutubePlay"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid "Reproduz links do Youtube a partir da área de transferência"
+msgstr "Plays Youtube links from the clipboard"
