@@ -32,12 +32,18 @@ def atualizaYoutubedl():
 
 def buscaLink():
     global _handle, volume
-    link = api.getClipData()
+    try:
+        link = api.getClipData()
+    except:
+        ui.message(_("Link não encontrado."))
+        return
     final = ""
     if link.find("https://")>-1:
         final = link.split("https://")[1]
     elif link.find("HTTPS://")>-1:
         final = link.split("HTTPS://")[1]
+    else:
+        final = ""
     if final == "":
         ui.message(_("Link não encontrado."))
         return
