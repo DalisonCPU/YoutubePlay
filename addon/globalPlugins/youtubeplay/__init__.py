@@ -1,6 +1,8 @@
 #-*- coding:utf-8 -*-
+# This file is covered by the GNU General Public License.
+# See the file COPYING.txt for more details.
 # YoutubePlay - Script destinado à reprodução de links do Youtube
-#Feito por Dalison J. T
+# Feito por Dalison J. T
 from datetime import datetime
 from datetime import timedelta
 import threading
