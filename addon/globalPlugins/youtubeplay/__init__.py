@@ -38,8 +38,9 @@ def buscaLink():
     try:
         link = api.getClipData()
     except:
+        ui.message(
         # TRANSLATORS: Mensagem para anunciar que não encontrou o link
-        ui.message(_("Link não encontrado."))
+        _("Link não encontrado."))
         return
     final = ""
     if link.find("https://")>-1:
@@ -49,8 +50,9 @@ def buscaLink():
     else:
         final = ""
     if final == "":
-        # TRANSLATORS: Mensagem para anunciar que o link não foi encontrado
-        ui.message(_("Link não encontrado."))
+        ui.message(
+        # TRANSLATORS: Mensagem para anunciar que não encontrou o link
+        _("Link não encontrado."))
         return
     link = final
     if final.find(" ")>-1:
@@ -62,8 +64,9 @@ def buscaLink():
         #log.info(os.path.join(os.path.dirname(__file__), "youtube-dl.exe -f \"mp4/m4a/webm\" -g -c -i --geo-bypass -4 --no-cache-dir --no-part --no-warnings "+link))
         link = a.read()
         if link == "":
+            ui.message(
             # TRANSLATORS: Mensagem que anuncia que nenhum link foi retornado do Youtube-dl
-            ui.message(_("Nenhum link retornado do Youtube-dl"))
+            _("Nenhum link retornado do Youtube-dl"))
             return
     _handle = load(link)
     setVolume()
