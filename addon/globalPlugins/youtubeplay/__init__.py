@@ -6,10 +6,11 @@
 from datetime import datetime
 from datetime import timedelta
 import threading
-import appModuleHandler
+from scriptHandler import script
 import os, ui
 import api
-import globalPluginHandler
+import globalVars
+from globalPluginHandler import GlobalPlugin
 import addonHandler
 import sys
 from logHandler import log
@@ -37,6 +38,7 @@ def buscaLink():
     try:
         link = api.getClipData()
     except:
+        # TRANSLATORS: Mensagem para anunciar que não encontrou o link
         ui.message(_("Link não encontrado."))
         return
     final = ""
@@ -47,6 +49,7 @@ def buscaLink():
     else:
         final = ""
     if final == "":
+        # TRANSLATORS: Mensagem para anunciar que o link não foi encontrado
         ui.message(_("Link não encontrado."))
         return
     link = final
@@ -59,6 +62,7 @@ def buscaLink():
         #log.info(os.path.join(os.path.dirname(__file__), "youtube-dl.exe -f \"mp4/m4a/webm\" -g -c -i --geo-bypass -4 --no-cache-dir --no-part --no-warnings "+link))
         link = a.read()
         if link == "":
+            # TRANSLATORS: Mensagem que anuncia que nenhum link foi retornado do Youtube-dl
             ui.message(_("Nenhum link retornado do Youtube-dl"))
             return
     _handle = load(link)
@@ -93,9 +97,12 @@ def load(url, offset=0, flags=0, user=None):
         raise_error()
         return handle
 
-class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+class GlobalPlugin(GlobalPlugin):
+    scriptCategory = _("YoutubePlay")
     def __init__(self):
-        super(globalPluginHandler.GlobalPlugin, self).__init__()
+        if globalVars.appArgs.secure:
+            return
+        super(GlobalPlugin, self).__init__()
         agora = datetime.now()
         salva = datetime.now()
         if os.path.exists(os.path.join(os.path.dirname(__file__), "data.txt")):
@@ -116,6 +123,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             th.start()
         self.o = pybass.BASS_Init(-1, 44100, 0, 0, 0)
 
+    @script(
+        description=
+        # TRANSLATORS: Nome que aparece nos gestos de entrada ao definir comandos do NVDA
+        _("Tenta reproduzir um link da área de transferência"),
+        gestures=["kb:NVDA+CONTROL+SHIFT+H"]
+    )
     def script_reproduzVideo(self, gesture):
         global _handle
         info = pybass.BASS_ChannelIsActive(_handle)
@@ -125,7 +138,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         th = threading.Thread(target=buscaLink, daemon=True)
         th.start()
 
-    script_reproduzVideo.__doc__ = _('Reproduz e pausa o vídeo')
+    @script(
+        description=
+        # TRANSLATORS: Nome que aparece em definir comandos, ao chamar a função para pausar ou reproduzir o vídeo atual
+        _("Pausa ou reproduz o vídeo atual"),
+        gestures=["kb:NVDA+CONTROL+SHIFT+K"]
+    )
     def script_alternaVideo(self, gesture):
         global _handle
         info = pybass.BASS_ChannelIsActive(_handle)
@@ -134,8 +152,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         else:
             pybass.BASS_ChannelPlay(_handle, False)
 
-    script_alternaVideo.__doc__ = _('Pausa ou reproduz o vídeo atual')
-
+    @script(
+        description=
+        # TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para abaixar volume
+        _("Abaixa o volume da música em reprodução"),
+        gestures=["kb:NVDA+CONTROL+SHIFT+J"]
+    )
     def script_abaixaVolume(self, gesture):
         global _handle, volume
         info = pybass.BASS_ChannelIsActive(_handle)
@@ -144,7 +166,12 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         volume = volume - 200
         setVolume()
 
-    script_abaixaVolume.__doc__ = _('Abaixa o volume da música em reprodução')
+    @script(
+        description=
+        # TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para aumentar volume
+        _("Aumenta o volume do vídeo em reprodução"),
+        gestures=["kb:NVDA+CONTROL+SHIFT+L"]
+    )
     def script_aumentaVolume(self, gesture):
         global _handle, volume
         info = pybass.BASS_ChannelIsActive(_handle)
@@ -153,15 +180,8 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         volume = volume + 200
         setVolume()
 
-    script_aumentaVolume.__doc__ = _('Aumenta o volume do vídeo em reprodução')
 
     def terminate(self):
-        pybass.BASS_StreamFree(_handle)
+        if _handle !=0:
+            pybass.BASS_StreamFree(_handle)
         pybass.BASS_Free()
-
-    __gestures = {
-        "kb:nvda+shift+control+h": "reproduzVideo",
-        "kb:nvda+shift+control+j": "abaixaVolume",
-        "kb:nvda+shift+control+k": "alternaVideo",
-        "kb:nvda+shift+control+l": "aumentaVolume",
-    }
