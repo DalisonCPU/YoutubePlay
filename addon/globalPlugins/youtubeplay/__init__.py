@@ -14,9 +14,21 @@ from globalPluginHandler import GlobalPlugin
 import addonHandler
 import sys
 from logHandler import log
-sys.path.append(os.path.dirname(__file__))
+dirAddon=os.path.dirname(__file__)
+sys.path.append(dirAddon)
 import pybass
 import pybass_aac
+sys.path.append(os.path.join(dirAddon, "lib"))
+import xml
+xml.__path__.append(os.path.join(dirAddon, "lib", "xml"))
+import importlib_metadata
+importlib_metadata.__path__.append(os.path.join(dirAddon, "lib", "importlib_metadata"))
+import html
+html.__path__.append(os.path.join(dirAddon, "lib", "html"))
+import markdown
+markdown.__path__.append(os.path.join(dirAddon, "lib", "markdown"))
+from .youtube_dl import YoutubeDL
+del sys.path[-1]
 addonHandler.initTranslation()
 
 _handle = 0
@@ -60,9 +72,14 @@ def buscaLink():
     #log.info(link)
     if link.find("youtube")>-1:
         link = "https://"+link
-        a = os.popen(os.path.join(os.path.dirname(__file__), "youtube-dl.exe -f \"mp4/m4a/webm\" -g -c -i --geo-bypass -4 --no-cache-dir --no-part --no-warnings "+link))
+        #a = os.popen(os.path.join(os.path.dirname(__file__), "youtube-dl.exe -f \"mp4/m4a/webm\" -g -c -i --geo-bypass -4 --no-cache-dir --no-part --no-warnings "+link))
         #log.info(os.path.join(os.path.dirname(__file__), "youtube-dl.exe -f \"mp4/m4a/webm\" -g -c -i --geo-bypass -4 --no-cache-dir --no-part --no-warnings "+link))
-        link = a.read()
+        #link = a.read()
+        y = YoutubeDL({
+                'format': 'bestaudio',
+        })
+        r = y.extract_info(link, download=False)
+        link = r['url']
         if link == "":
             ui.message(
             # TRANSLATORS: Mensagem que anuncia que nenhum link foi retornado do Youtube-dl
@@ -127,8 +144,7 @@ class GlobalPlugin(GlobalPlugin):
         self.o = pybass.BASS_Init(-1, 44100, 0, 0, 0)
 
     @script(
-        description=
-        # TRANSLATORS: Nome que aparece nos gestos de entrada ao definir comandos do NVDA
+        description=        # TRANSLATORS: Nome que aparece nos gestos de entrada ao definir comandos do NVDA
         _("Tenta reproduzir um link da área de transferência"),
         gestures=["kb:NVDA+CONTROL+SHIFT+H"]
     )
@@ -142,8 +158,7 @@ class GlobalPlugin(GlobalPlugin):
         th.start()
 
     @script(
-        description=
-        # TRANSLATORS: Nome que aparece em definir comandos, ao chamar a função para pausar ou reproduzir o vídeo atual
+        description=        # TRANSLATORS: Nome que aparece em definir comandos, ao chamar a função para pausar ou reproduzir o vídeo atual
         _("Pausa ou reproduz o vídeo atual"),
         gestures=["kb:NVDA+CONTROL+SHIFT+K"]
     )
@@ -156,8 +171,7 @@ class GlobalPlugin(GlobalPlugin):
             pybass.BASS_ChannelPlay(_handle, False)
 
     @script(
-        description=
-        # TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para abaixar volume
+        description=        # TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para abaixar volume
         _("Abaixa o volume da música em reprodução"),
         gestures=["kb:NVDA+CONTROL+SHIFT+J"]
     )
@@ -170,8 +184,7 @@ class GlobalPlugin(GlobalPlugin):
         setVolume()
 
     @script(
-        description=
-        # TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para aumentar volume
+        description=        # TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para aumentar volume
         _("Aumenta o volume do vídeo em reprodução"),
         gestures=["kb:NVDA+CONTROL+SHIFT+L"]
     )
@@ -188,3 +201,4 @@ class GlobalPlugin(GlobalPlugin):
         if _handle !=0:
             pybass.BASS_StreamFree(_handle)
         pybass.BASS_Free()
+
