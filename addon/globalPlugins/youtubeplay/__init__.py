@@ -27,8 +27,19 @@ import html
 html.__path__.append(os.path.join(dirAddon, "lib", "html"))
 import markdown
 markdown.__path__.append(os.path.join(dirAddon, "lib", "markdown"))
-from .youtube_dl import YoutubeDL
+import urllib.request
+import json
+import zipfile
+import youtube_dl
+#import shutil
+#shutil.__path__.append(os.path.join(dirAddon, "lib", "shutil"))
+import distutils
+distutils.__path__.append(os.path.join(dirAddon, "lib", "distutils"))
+from distutils.dir_util import copy_tree
+from shutil import rmtree
+#from .youtube_dl import YoutubeDL
 del sys.path[-1]
+import ctypes
 addonHandler.initTranslation()
 
 _handle = 0
@@ -42,8 +53,45 @@ def setVolume():
         volume = 200
     pybass.BASS_SetConfig(5, volume)
 
+def __call__(block_num, block_size, total_size):
+    # Esta función se podria definir para tener un contador de bityes descargados y porcentaje.
+    # Todo depende de como quieras hacer el actualizador.
+    pass
+
 def atualizaYoutubedl():
-    a = os.popen(os.path.join(os.path.dirname(__file__), "youtube-dl.exe --update"))
+    # Url para obtener el json y obtener el archivo de descarga de la ultima versión desde el repo oficial de YouTube-Dl
+    url = "https://api.github.com/repos/ytdl-org/youtube-dl/releases"
+    req = urllib.request.Request(url)
+    # Vamos a obtener el json y a leerlo.
+    r = urllib.request.urlopen(req).read()
+    gitJson = json.loads(r.decode('utf-8'))
+    # Vamos a comprobar si la versión de Github es mayor que la que tenemos instalada si lo es descargamos
+    if gitJson[0]["tag_name"] != youtube_dl.version.__version__:
+        opener = urllib.request.build_opener()
+        opener.addheaders = [('User-agent', 'Mozilla/5.0')]
+        urllib.request.install_opener(opener)
+        urllib.request.urlretrieve(gitJson[0]['zipball_url'], "test.zip", reporthook=__call__)
+        # Ahora leemos el archivo zip descargado que hemos llamado test.zip
+        archive = zipfile.ZipFile('test.zip')
+        # Obtenemos el nombre del directorio raiz del zip, necesario por que cada nueva versión tendra un nombre.
+        root = archive.namelist()[0]
+        # Esto siguiente buscara el directorio que nos interesa para extraer que es el Youtube_dl. No es necesario por que podemos construirlo con el root pero prefiero por si algun día cambiase.
+        filtro = [item for item in archive.namelist() if "youtube_dl".lower() in item.lower()]
+        # Ahora vamos a extraer solo el directorio de YouTube-Dl.
+        for file in archive.namelist():
+            if file.startswith(filtro[0]):
+                archive.extract(file, os.getcwd())
+        archive.close()
+    # Borramos el archivo descargado
+        os.remove("test.zip")
+        # Ahora vamos a borrar el directorio de la libreria de youtube_dl
+        dirAddon=os.path.dirname(__file__)
+        rmtree(dirAddon+"\\youtube_dl")
+        # Ahora vamos a copiar el directorio extraido de youtube_dl a la raiz de nuestro proyecto.
+        copy_tree(root, os.getcwd())
+        # Ahora vamos a borrar el directorio que extraimos.
+        rmtree(os.path.join(os.getcwd(), root))
+        log.info(_("Youtube-DL atualizado."))
 
 def buscaLink():
     global _handle, volume
@@ -72,10 +120,8 @@ def buscaLink():
     #log.info(link)
     if link.find("youtube")>-1:
         link = "https://"+link
-        #a = os.popen(os.path.join(os.path.dirname(__file__), "youtube-dl.exe -f \"mp4/m4a/webm\" -g -c -i --geo-bypass -4 --no-cache-dir --no-part --no-warnings "+link))
-        #log.info(os.path.join(os.path.dirname(__file__), "youtube-dl.exe -f \"mp4/m4a/webm\" -g -c -i --geo-bypass -4 --no-cache-dir --no-part --no-warnings "+link))
-        #link = a.read()
-        y = YoutubeDL({
+        y = youtube_dl.YoutubeDL({
+                'quiet': True,
                 'format': 'bestaudio',
         })
         r = y.extract_info(link, download=False)
@@ -123,24 +169,8 @@ class GlobalPlugin(GlobalPlugin):
         if globalVars.appArgs.secure:
             return
         super(GlobalPlugin, self).__init__()
-        agora = datetime.now()
-        salva = datetime.now()
-        if os.path.exists(os.path.join(os.path.dirname(__file__), "data.txt")):
-            f = open(os.path.join(os.path.dirname(__file__), "data.txt"), "r")
-            salva = datetime.strptime(f.readline(), "%Y-%m-%d %H:%M:%S.%f")
-            f.close()
-        else:
-            f = open(os.path.join(os.path.dirname(__file__), "data.txt"), "w")
-            f.write(str(agora))
-            f.close()
-        delta = agora - salva
-        #log.info(str(delta.days)+" dias")
-        if delta.days>0:
-            f = open(os.path.join(os.path.dirname(__file__), "data.txt"), "w")
-            f.write(str(agora))
-            f.close()
-            th = threading.Thread(target=atualizaYoutubedl, daemon=True)
-            th.start()
+        th = threading.Thread(target=atualizaYoutubedl, daemon=True)
+        th.start()
         self.o = pybass.BASS_Init(-1, 44100, 0, 0, 0)
 
     @script(

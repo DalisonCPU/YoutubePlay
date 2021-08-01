@@ -7,35 +7,34 @@ msgid ""
 msgstr ""
 "Project-Id-Version: YoutubePlay 1.0\n"
 "Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
-"POT-Creation-Date: 2021-07-17 15:38-0300\n"
-"PO-Revision-Date: 2021-07-17 19:34-0300\n"
+"POT-Creation-Date: 2021-07-30 18:05-0300\n"
+"PO-Revision-Date: 2021-07-30 18:08-0300\n"
+"Last-Translator: Dalison <dalisonmg@gmail.com>\n"
 "Language-Team: Dalison\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
-"Last-Translator: Dalison <dalisonmg@gmail.com>\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: en\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
+msgid "Youtube-DL atualizado."
+msgstr "YoutubeDL updated."
+
+msgid "Atualização concluída"
+msgstr "Update complete"
+
+msgid "O Youtube-DL foi atualizado para a versão"
+msgstr "Youtube-DL has been updated to the version"
+
+#. TRANSLATORS: Mensagem para anunciar que não encontrou o link
 msgid "Link não encontrado."
 msgstr "Link not found."
 
+#. TRANSLATORS: Mensagem que anuncia que nenhum link foi retornado do Youtube-dl
 msgid "Nenhum link retornado do Youtube-dl"
 msgstr "No links returned from Youtube-dl"
-
-msgid "Reproduz e pausa o vídeo"
-msgstr "Play and pause the video"
-
-msgid "Pausa ou reproduz o vídeo atual"
-msgstr "Pause or play current video"
-
-msgid "Abaixa o volume da música em reprodução"
-msgstr "Turns down the volume of the music being played"
-
-msgid "Aumenta o volume do vídeo em reprodução"
-msgstr "Increases the volume of the video playing"
 
 #. Add-on summary, usually the user visible name of the addon.
 #. Translators: Summary for this add-on
@@ -43,7 +42,26 @@ msgstr "Increases the volume of the video playing"
 msgid "YoutubePlay"
 msgstr "YoutubePlay"
 
+#. TRANSLATORS: Nome que aparece nos gestos de entrada ao definir comandos do NVDA
+msgid "Tenta reproduzir um link da área de transferência"
+msgstr "Tries to play a clipboard link"
+
+#. TRANSLATORS: Nome que aparece em definir comandos, ao chamar a função para pausar ou reproduzir o vídeo atual
+msgid "Pausa ou reproduz o vídeo atual"
+msgstr "Pause or play current video"
+
+#. TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para abaixar volume
+msgid "Abaixa o volume da música em reprodução"
+msgstr "Turns down the volume of the music being played"
+
+#. TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para aumentar volume
+msgid "Aumenta o volume do vídeo em reprodução"
+msgstr "Increases the volume of the video playing"
+
 #. Add-on description
 #. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
 msgid "Reproduz links do Youtube a partir da área de transferência"
 msgstr "Plays Youtube links from the clipboard"
+
+#~ msgid "Reproduz e pausa o vídeo"
+#~ msgstr "Play and pause the video"

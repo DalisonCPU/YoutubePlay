@@ -5,10 +5,10 @@ from .abc import (
     ABCIE,
     ABCIViewIE,
 )
-from .abcnews import (
-    AbcNewsIE,
-    AbcNewsVideoIE,
-)
+#from .abcnews import (
+#    AbcNewsIE,
+#    AbcNewsVideoIE,
+#)
 from .abcotvs import (
     ABCOTVSIE,
     ABCOTVSClipsIE,
