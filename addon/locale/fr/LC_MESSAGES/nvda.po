@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the YoutubePlay package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: YoutubePlay 1.0\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2021-08-04 00:40+0200\n"
+"PO-Revision-Date: 2021-08-04 09:51+0200\n"
+"Last-Translator: Rémy Ruiz <remyruiz@gmail.com>\n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#. TRANSLATORS: Mensagem para anunciar que não encontrou o link
+msgid "Link não encontrado."
+msgstr "Lien introuvable."
+
+#. TRANSLATORS: Mensagem que anuncia que nenhum link foi retornado do Youtube-dl
+msgid "Nenhum link retornado do Youtube-dl"
+msgstr "Aucun lien n'est renvoyé de Youtube-dl"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+msgid "YoutubePlay"
+msgstr "YoutubePlay"
+
+#. TRANSLATORS: Nome que aparece nos gestos de entrada ao definir comandos do NVDA
+msgid "Tenta reproduzir um link da área de transferência"
+msgstr "Essayez de lire un lien du presse-papiers"
+
+#. TRANSLATORS: Nome que aparece em definir comandos, ao chamar a função para pausar ou reproduzir o vídeo atual
+msgid "Pausa ou reproduz o vídeo atual"
+msgstr "Mettre en pause ou lire la vidéo actuelle"
+
+#. TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para abaixar volume
+msgid "Abaixa o volume da música em reprodução"
+msgstr "Diminuer le volume de la musique en cours de lecture"
+
+#. TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para aumentar volume
+msgid "Aumenta o volume do vídeo em reprodução"
+msgstr "Augmenter le volume de la vidéo en cours de lecture"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid "Reproduz links do Youtube a partir da área de transferência"
+msgstr "Lire des liens YouTube depuis le presse-papiers"
+
+#~ msgid "Youtube-DL atualizado."
+#~ msgstr "Youtube-DL mis à jour."
+
+#~ msgid "Atualização concluída"
+#~ msgstr "Mise à jour terminée"
+
+#~ msgid "O Youtube-DL foi atualizado para a versão"
+#~ msgstr "Youtube-DL a été mis à jour à la version"
