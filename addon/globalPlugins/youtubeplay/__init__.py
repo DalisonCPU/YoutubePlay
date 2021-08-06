@@ -3,11 +3,12 @@
 # See the file COPYING.txt for more details.
 # YoutubePlay - Script destinado à reprodução de links do Youtube
 # Feito por Dalison J. T
+import importlib
 from datetime import datetime
 from datetime import timedelta
 import threading
 from scriptHandler import script
-import os, ui
+import os, ui, wx, gui, winsound
 import api
 import globalVars
 from globalPluginHandler import GlobalPlugin
@@ -16,30 +17,41 @@ import sys
 from logHandler import log
 dirAddon=os.path.dirname(__file__)
 sys.path.append(dirAddon)
-import pybass
-import pybass_aac
+try:
+	import pybass
+	import pybass_aac
+except:
+	log.exception(
+		# TRANSLATORS: Erro ao importar bass
+		_("Erro ao importar a biblioteca bass"))
 sys.path.append(os.path.join(dirAddon, "lib"))
-import xml
-xml.__path__.append(os.path.join(dirAddon, "lib", "xml"))
-import importlib_metadata
-importlib_metadata.__path__.append(os.path.join(dirAddon, "lib", "importlib_metadata"))
-import html
-html.__path__.append(os.path.join(dirAddon, "lib", "html"))
-import markdown
-markdown.__path__.append(os.path.join(dirAddon, "lib", "markdown"))
-import urllib.request
-import json
-import zipfile
+try:
+	import xml
+	xml.__path__.append(os.path.join(dirAddon, "lib", "xml"))
+	import importlib_metadata
+	importlib_metadata.__path__.append(os.path.join(dirAddon, "lib", "importlib_metadata"))
+	import html
+	html.__path__.append(os.path.join(dirAddon, "lib", "html"))
+	import markdown
+	markdown.__path__.append(os.path.join(dirAddon, "lib", "markdown"))
+	import urllib.request
+	import json
+	import zipfile
+except:
+	log.exception(
+		# TRANSLATORS: Mensagem que será mostrada no log caso ocorra algum erro de importação com as bibliotecas do YoutubeDL
+		_("Erro ao importar uma ou mais bibliotecas usadas no YoutubeDL"))
 import youtube_dl
-#import shutil
-#shutil.__path__.append(os.path.join(dirAddon, "lib", "shutil"))
-import distutils
-distutils.__path__.append(os.path.join(dirAddon, "lib", "distutils"))
-from distutils.dir_util import copy_tree
-from shutil import rmtree
-#from .youtube_dl import YoutubeDL
+try:
+	import distutils
+	distutils.__path__.append(os.path.join(dirAddon, "lib", "distutils"))
+	from distutils.dir_util import copy_tree
+	from shutil import rmtree
+except:
+	log.exception(
+		# TRANSLATORS: Mensagem mostrada no log, caso alguma biblioteca usada para a atualização do addon não seja importada.
+		_("Erro ao importar uma ou mais bibliotecas usadas para a atualização do YoutubeDL."))
 del sys.path[-1]
-import ctypes
 addonHandler.initTranslation()
 
 _handle = 0
@@ -67,12 +79,26 @@ def atualizaYoutubedl():
     gitJson = json.loads(r.decode('utf-8'))
     # Vamos a comprobar si la versión de Github es mayor que la que tenemos instalada si lo es descargamos
     if gitJson[0]["tag_name"] != youtube_dl.version.__version__:
+        versaoSalva= ""
+        if os.path.exists(os.path.join(os.path.dirname(__file__), "version.txt")):
+            f = open(os.path.join(os.path.dirname(__file__), "version.txt"), "r")
+            versaoSalva = f.readline()
+            f.close()
+        if versaoSalva !="" and versaoSalva == gitJson[0]["tag_name"]:
+            return
+        winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
+        resposta = wx.MessageBox(_("Você deseja atualizar o YoutubeDl?"), _("Atualização disponível do YoutubeDl"), wx.ICON_QUESTION | wx.YES_NO)
+        if resposta != 2:
+            f = open(os.path.join(os.path.dirname(__file__), "version.txt"), "w")
+            f.write(gitJson[0]["tag_name"])
+            f.close()
+            return
         opener = urllib.request.build_opener()
         opener.addheaders = [('User-agent', 'Mozilla/5.0')]
         urllib.request.install_opener(opener)
-        urllib.request.urlretrieve(gitJson[0]['zipball_url'], "test.zip", reporthook=__call__)
+        urllib.request.urlretrieve(gitJson[0]['zipball_url'], dirAddon+"/test.zip", reporthook=__call__)
         # Ahora leemos el archivo zip descargado que hemos llamado test.zip
-        archive = zipfile.ZipFile('test.zip')
+        archive = zipfile.ZipFile(dirAddon+'/test.zip')
         # Obtenemos el nombre del directorio raiz del zip, necesario por que cada nueva versión tendra un nombre.
         root = archive.namelist()[0]
         # Esto siguiente buscara el directorio que nos interesa para extraer que es el Youtube_dl. No es necesario por que podemos construirlo con el root pero prefiero por si algun día cambiase.
@@ -80,18 +106,27 @@ def atualizaYoutubedl():
         # Ahora vamos a extraer solo el directorio de YouTube-Dl.
         for file in archive.namelist():
             if file.startswith(filtro[0]):
-                archive.extract(file, os.getcwd())
+                archive.extract(file, dirAddon)
         archive.close()
     # Borramos el archivo descargado
-        os.remove("test.zip")
+        os.remove(dirAddon+"/test.zip")
         # Ahora vamos a borrar el directorio de la libreria de youtube_dl
-        dirAddon=os.path.dirname(__file__)
         rmtree(dirAddon+"\\youtube_dl")
         # Ahora vamos a copiar el directorio extraido de youtube_dl a la raiz de nuestro proyecto.
-        copy_tree(root, os.getcwd())
+        copy_tree(dirAddon+"\\"+root, dirAddon)
         # Ahora vamos a borrar el directorio que extraimos.
-        rmtree(os.path.join(os.getcwd(), root))
-        log.info(_("Youtube-DL atualizado."))
+        rmtree(os.path.join(dirAddon, root))
+        importlib.reload(youtube_dl)
+        if gitJson[0]["tag_name"] != youtube_dl.version.__version__:
+            log.error(
+                # TRANSLATORS: Mensagem de erro se o YoutubeDL não for atualizado
+                _("Por algum motivo o YoutubeDL não foi atualizado."))
+        else:
+            gui.messageBox(
+                # TRANSLATORS: Mensagem mostrada quando concluir a atualização do YoutubeDL
+                _("O YoutubeDl foi atualizado com sucesso. Reinicie o NVDA para aplicar as alterações."), 
+                # TRANSLATORS: Título da janela de atualização
+                _("Atualização concluída"), style=wx.OK | wx.ICON_INFORMATION)
 
 def buscaLink():
     global _handle, volume
@@ -121,8 +156,8 @@ def buscaLink():
     if link.find("youtube")>-1:
         link = "https://"+link
         y = youtube_dl.YoutubeDL({
-                'quiet': True,
-                'format': 'bestaudio',
+                'quiet': False,
+                'format': 'mp4',
         })
         r = y.extract_info(link, download=False)
         link = r['url']
@@ -189,7 +224,7 @@ class GlobalPlugin(GlobalPlugin):
 
     @script(
         description=        # TRANSLATORS: Nome que aparece em definir comandos, ao chamar a função para pausar ou reproduzir o vídeo atual
-        _("Pausa ou reproduz o vídeo atual"),
+        _("Pausa ou reproduz a música atual"),
         gestures=["kb:NVDA+CONTROL+SHIFT+K"]
     )
     def script_alternaVideo(self, gesture):
@@ -202,7 +237,7 @@ class GlobalPlugin(GlobalPlugin):
 
     @script(
         description=        # TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para abaixar volume
-        _("Abaixa o volume da música em reprodução"),
+        _("Diminui o volume da música em reprodução"),
         gestures=["kb:NVDA+CONTROL+SHIFT+J"]
     )
     def script_abaixaVolume(self, gesture):
@@ -215,7 +250,7 @@ class GlobalPlugin(GlobalPlugin):
 
     @script(
         description=        # TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para aumentar volume
-        _("Aumenta o volume do vídeo em reprodução"),
+        _("Aumenta o volume da música em reprodução"),
         gestures=["kb:NVDA+CONTROL+SHIFT+L"]
     )
     def script_aumentaVolume(self, gesture):
