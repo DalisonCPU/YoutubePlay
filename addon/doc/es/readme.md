@@ -1,5 +1,5 @@
 #YoutubePlay
-Este complemento tiene como finalidad la reproducción de videos de Youtube, enlaces desde el portapapeles.
+Este complemento tiene como finalidad la reproducción de enlaces de videos de YouTube desde el portapapeles.
 
 # Cómo usar
 1. Copia un enlace de algún video desde el portapapeles.
@@ -8,10 +8,10 @@ Este complemento tiene como finalidad la reproducción de videos de Youtube, enl
 Si todo ocurre como se esperaba, el video debe comenzar a jugar.
 
 # Teclas de atajo durante la reproducción
-NVDA+CTRL+SHIFT+J: Bajar el volumen.  
+NVDA+CTRL+SHIFT+J: Disminuir el volumen.  
 NVDA+CTRL+SHIFT+K: Pausar o reproducir la video.  
-NVDA+CTRL+SHIFT+L: Subir el volumen.  
+NVDA+CTRL+SHIFT+L: Aumentar el volumen.  
 
-#Agradecimientos
+# Agradecimientos
 Muchas gracias a todos los que me han ayudado con el desarrollo de este complemento. Ya sea con ideas o con algunas partes de código.  
-Un reconocimiento especial para Nuno Costa y JMDAWeb
+Un reconocimiento especial para Nuno Costa, JMDAWeb y Rémy Ruiz.

@@ -1,5 +1,5 @@
 #YoutubePlay
-Cette extension est destinée à lire des vidéos YouTube, des liens depuis le presse-papiers.
+Cette extension est destinée à lire des liens de vidéos YouTube depuis le presse-papiers.
 
 # Comment l'utiliser
 1. Copier un lien d'une vidéo dans le Presse-papiers.
@@ -12,6 +12,6 @@ NVDA+CTRL+MAJ+J: Diminuer le volume.
 NVDA+CTRL+MAJ+K: Mettre en pause ou lire la vidéo.  
 NVDA+CTRL+MAJ+L: Augmenter le volume.  
 
-#Remerciements
+# Remerciements
 Merci beaucoup à tous ceux qui m'ont aidé avec le développement de cette extension, que ce soit avec des idées ou avec certaines parties du code.  
-Reconnaissance spéciale à Nuno Costa et JMDAWeb
+Reconnaissance spéciale à Nuno Costa, JMDAWeb et Rémy Ruiz.

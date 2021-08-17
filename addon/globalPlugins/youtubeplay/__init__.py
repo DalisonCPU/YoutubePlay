@@ -3,9 +3,6 @@
 # See the file COPYING.txt for more details.
 # YoutubePlay - Script destinado à reprodução de links do Youtube
 # Feito por Dalison J. T
-import importlib
-from datetime import datetime
-from datetime import timedelta
 import threading
 from scriptHandler import script
 import os, ui, wx, gui, winsound
@@ -116,17 +113,14 @@ def atualizaYoutubedl():
         copy_tree(dirAddon+"\\"+root, dirAddon)
         # Ahora vamos a borrar el directorio que extraimos.
         rmtree(os.path.join(dirAddon, root))
-        importlib.reload(youtube_dl)
-        if gitJson[0]["tag_name"] != youtube_dl.version.__version__:
-            log.error(
-                # TRANSLATORS: Mensagem de erro se o YoutubeDL não for atualizado
-                _("Por algum motivo o YoutubeDL não foi atualizado."))
-        else:
-            gui.messageBox(
-                # TRANSLATORS: Mensagem mostrada quando concluir a atualização do YoutubeDL
-                _("O YoutubeDl foi atualizado com sucesso. Reinicie o NVDA para aplicar as alterações."), 
-                # TRANSLATORS: Título da janela de atualização
-                _("Atualização concluída"), style=wx.OK | wx.ICON_INFORMATION)
+        winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
+        resposta = wx.MessageBox(
+            # TRANSLATORS: Mensagem mostrada ao concluir a atualização do Youtube-DL
+            _("O Youtube-DL foi atualizado com sucesso. É necessário reiniciar o NVDA para aplicar as alterações. Você deseja reiniciar agora?"), _("Atualização concluída"), wx.ICON_QUESTION | wx.YES_NO)
+        if resposta == 2:
+            import core
+            core.restart()
+
 
 def buscaLink():
     global _handle, volume
@@ -219,6 +213,7 @@ class GlobalPlugin(GlobalPlugin):
         if info == pybass.BASS_ACTIVE_PLAYING:
             pybass.BASS_ChannelStop(_handle)
             _handle = 0
+            return
         th = threading.Thread(target=buscaLink, daemon=True)
         th.start()
 
