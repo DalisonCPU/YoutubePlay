@@ -1,0 +1,63 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: nvda-translations@groups.io\n"
+"POT-Creation-Date: 2021-08-16 21:16+0200\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Youtube-DL atualizado."
+msgstr "تحديث Youtube-DL."
+
+msgid "Atualização concluída"
+msgstr "إنتهى التحديث"
+
+msgid "O Youtube-DL foi atualizado para a versão"
+msgstr "تم تحديث Youtube-DL إلى الإصدار"
+
+#. TRANSLATORS: Mensagem para anunciar que não encontrou o link
+msgid "Link não encontrado."
+msgstr "الرابط غير موجود."
+
+#. TRANSLATORS: Mensagem que anuncia que nenhum link foi retornado do Youtube-dl
+msgid "Nenhum link retornado do Youtube-dl"
+msgstr "لم يتم إرجاع أي روابط من Youtube-dl"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+msgid "YoutubePlay"
+msgstr "تشغيل يوتيوب"
+
+#. TRANSLATORS: Nome que aparece nos gestos de entrada ao definir comandos do NVDA
+msgid "Tenta reproduzir um link da área de transferência"
+msgstr "حاول تشغيل ارتباط من الحافظة"
+
+#. TRANSLATORS: Nome que aparece em definir comandos, ao chamar a função para pausar ou reproduzir o vídeo atual
+msgid "Pausa ou reproduz o vídeo atual"
+msgstr "إيقاف مؤقت أو تشغيل الفيديو الحالي"
+
+#. TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para abaixar volume
+msgid "Abaixa o volume da música em reprodução"
+msgstr "اخفض مستوى صوت الأغنية التي يتم تشغيلها حاليًا"
+
+#. TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para aumentar volume
+msgid "Aumenta o volume do vídeo em reprodução"
+msgstr "يزيد من حجم الفيديو قيد التشغيل"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+msgid "Reproduz links do Youtube a partir da área de transferência"
+msgstr "تشغيل روابط يوتيوب من الحافظة"
+
+msgid "Reproduz e pausa o vídeo"
+msgstr "Play and pause the video"
