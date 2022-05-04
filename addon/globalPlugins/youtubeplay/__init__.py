@@ -131,6 +131,8 @@ def buscaLink():
         # TRANSLATORS: Mensagem para anunciar que não encontrou o link
         _("Link não encontrado."))
         return
+    if link.find("youtube.com")<0:
+        return
     final = ""
     if link.find("https://")>-1:
         final = link.split("https://")[1]
