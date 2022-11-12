@@ -1,0 +1,106 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the 'YoutubePlay' package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 'YoutubePlay' '1.6'\n"
+"Report-Msgid-Bugs-To: 'nvda-translations@groups.io'\n"
+"POT-Creation-Date: 2022-10-18 21:04+0300\n"
+"PO-Revision-Date: 2022-10-18 22:03+0300\n"
+"Last-Translator: Heorhii <nvda.translation.uk@gmail.com>\n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#. TRANSLATORS: Erro ao importar bass
+#: addon\globalPlugins\youtubeplay\__init__.py:23
+msgid "Erro ao importar a biblioteca bass"
+msgstr "Помилка при імпорті бібліотеки bass"
+
+#. TRANSLATORS: Mensagem que será mostrada no log caso ocorra algum erro de importação com as bibliotecas do YoutubeDL
+#: addon\globalPlugins\youtubeplay\__init__.py:40
+msgid "Erro ao importar uma ou mais bibliotecas usadas no YoutubeDL"
+msgstr ""
+"Помилка імпорту однієї або кількох бібліотек, які використовуються в "
+"YoutubeDL"
+
+#. TRANSLATORS: Mensagem mostrada no log, caso alguma biblioteca usada para a atualização do addon não seja importada.
+#: addon\globalPlugins\youtubeplay\__init__.py:50
+msgid ""
+"Erro ao importar uma ou mais bibliotecas usadas para a atualização do "
+"YoutubeDL."
+msgstr ""
+"Помилка імпорту однієї або кількох бібліотек, які використовуються для "
+"оновлення YoutubeDL."
+
+#: addon\globalPlugins\youtubeplay\__init__.py:87
+msgid "Você deseja atualizar o YoutubeDl?"
+msgstr "Ви хочете оновити YoutubeDl?"
+
+#: addon\globalPlugins\youtubeplay\__init__.py:87
+msgid "Atualização disponível do YoutubeDl"
+msgstr "Доступне оновлення для YoutubeDl"
+
+#. TRANSLATORS: Mensagem mostrada ao concluir a atualização do Youtube-DL
+#: addon\globalPlugins\youtubeplay\__init__.py:119
+msgid ""
+"O Youtube-DL foi atualizado com sucesso. É necessário reiniciar o NVDA para "
+"aplicar as alterações. Você deseja reiniciar agora?"
+msgstr ""
+"Youtube-DL успішно оновлено. Потрібно перезапустити NVDA, щоб застосувати "
+"зміни. Ви хочете перезапустити зараз?"
+
+#: addon\globalPlugins\youtubeplay\__init__.py:119
+msgid "Atualização concluída"
+msgstr "Оновлення завершено"
+
+#. TRANSLATORS: Mensagem para anunciar que não encontrou o link
+#: addon\globalPlugins\youtubeplay\__init__.py:132
+#: addon\globalPlugins\youtubeplay\__init__.py:146
+msgid "Link não encontrado."
+msgstr "Посилання не знайдено."
+
+#. TRANSLATORS: Mensagem que anuncia que nenhum link foi retornado do Youtube-dl
+#: addon\globalPlugins\youtubeplay\__init__.py:163
+msgid "Nenhum link retornado do Youtube-dl"
+msgstr "З Youtube-dl не отримано жодних посилань"
+
+#. Add-on summary, usually the user visible name of the addon.
+#. Translators: Summary for this add-on
+#. to be shown on installation and add-on information found in Add-ons Manager.
+#: addon\globalPlugins\youtubeplay\__init__.py:198 buildVars.py:23
+msgid "YoutubePlay"
+msgstr "YoutubePlay"
+
+#. TRANSLATORS: Nome que aparece nos gestos de entrada ao definir comandos do NVDA
+#: addon\globalPlugins\youtubeplay\__init__.py:209
+msgid "Tenta reproduzir um link da área de transferência"
+msgstr "Намагається відтворити посилання з буфера обміну"
+
+#. TRANSLATORS: Nome que aparece em definir comandos, ao chamar a função para pausar ou reproduzir o vídeo atual
+#: addon\globalPlugins\youtubeplay\__init__.py:224
+msgid "Pausa ou reproduz a música atual"
+msgstr "Призупинити або відтворити поточне відео"
+
+#. TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para abaixar volume
+#: addon\globalPlugins\youtubeplay\__init__.py:237
+msgid "Diminui o volume da música em reprodução"
+msgstr "Зменшує гучність під час відтворення"
+
+#. TRANSLATORS: Nome mostrado em definir comandos ao alterar o comando para aumentar volume
+#: addon\globalPlugins\youtubeplay\__init__.py:250
+msgid "Aumenta o volume da música em reprodução"
+msgstr "Збільшує гучність під час відтворення"
+
+#. Add-on description
+#. Translators: Long description to be shown for this add-on on add-on information from add-ons manager
+#: buildVars.py:26
+msgid "Reproduz links do Youtube a partir da área de transferência"
+msgstr "Відтворення посилань YouTube з буфера обміну"
